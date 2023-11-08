@@ -13,8 +13,13 @@ router.get("/articles", (req, res) => {
   db.all(sql, [], (err, articles) => {
     if (err) {
       handleError(res, err);
+    } else {
+      const articlesWithText = articles.map((article) => ({
+        ...article,
+        content: article.content.toString("utf8"),
+      }));
+      res.json(articlesWithText);
     }
-    res.json(articles);
   });
 });
 
@@ -36,7 +41,12 @@ router.get("/articles/:articleId", (req, res) => {
     if (err) {
       handleError(res, err);
     }
-    res.json(article);
+
+    const articleWithText = article.map((article) => ({
+      ...article,
+      content: article.content.toString("utf8"),
+    }));
+    res.json(articleWithText);
   });
 });
 
@@ -47,7 +57,11 @@ router.get("/articles/author/:authorId", (req, res) => {
     if (err) {
       handleError(res, err);
     }
-    res.json(articles);
+    const articlesWithText = articles.map((article) => ({
+      ...article,
+      content: article.content.toString("utf8"),
+    }));
+    res.json(articlesWithText);
   });
 });
 
